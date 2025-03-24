@@ -74,15 +74,32 @@ def search_artist(artist_name, token):
     return items[0] if items else None
 
 def get_artist_albums(artist_id, token):
+    all_albums = []
     url = f"https://api.spotify.com/v1/artists/{artist_id}/albums"
-    params = {"include_groups": "album,single", "limit": 50}
-    data = safe_request(url, auth_header(token), params)
-    return data.get("items", [])
+    params = {
+        "include_groups": "album,single",
+        "limit": 50,
+        "offset": 0
+    }
+
+    while url:
+        data = safe_request(url, auth_header(token), params)
+        items = data.get("items", [])
+        all_albums.extend(items)
+
+        url = data.get("next")
+        params = None  # URL already includes params for the next page
+
+    return all_albums
 
 def get_album_tracks(album_id, token):
     url = f"https://api.spotify.com/v1/albums/{album_id}/tracks"
     data = safe_request(url, auth_header(token))
     return data.get("items", [])
+
+def get_album(album_id, token):
+    url = f"https://api.spotify.com/v1/albums/{album_id}"
+    return safe_request(url, auth_header(token))
 
 # Insert our artist data into staging tables
 # currently using on conflict do nothing to deal with duplicates
@@ -112,17 +129,26 @@ def insert_stg_album(conn, album, artist_id):
         ))
         conn.commit()
 
-def insert_stg_track(conn, track, artist_id):
+def insert_stg_track(conn, track, artist_id, artist_name, album_name, release_date):
     with conn.cursor() as cur:
         cur.execute("""
-            INSERT INTO stg_tracks (track_id, name, artist_id, artist_name, album_name, release_date, duration_ms, popularity, explicit, external_url, raw_json)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            INSERT INTO stg_tracks (
+                track_id, name, artist_id, artist_name, album_name,
+                release_date, duration_ms, popularity, explicit, external_url, raw_json
+            )
+            VALUES (%s, %s, %s, %s, %s, %s, %s, NULL, %s, %s, %s)
             ON CONFLICT (track_id) DO NOTHING
         """, (
-            track["id"], track["name"], artist_id,
-            track["artists"][0]["name"], track["album"]["name"], track["album"]["release_date"],
-            track["duration_ms"], track["popularity"], track["explicit"],
-            track["external_urls"].get("spotify"), json.dumps(track)
+            track["id"],
+            track["name"],
+            artist_id,
+            artist_name,
+            album_name,
+            release_date,
+            track.get("duration_ms"),
+            track.get("explicit"),
+            track["external_urls"].get("spotify"),
+            json.dumps(track)
         ))
         conn.commit()
 
@@ -152,11 +178,22 @@ def run_spotify_etl():
             logging.info(f"Fetching albums for {artist['name']}")
             albums = get_artist_albums(artist["id"], token) # store in albums dictionary
             for album in albums:
-                insert_stg_album(conn, album, artist["id"])
-                logging.info(f"Fetching tracks for album: {album['name']}")
+                album_id = album['id']
+                album_data = get_album(album_id, token)
+                insert_stg_album(conn, album_data, artist["id"])
+
+                logging.info(f"Fetching tracks for album: {album_data['name']}")
+                
                 tracks = get_album_tracks(album["id"], token) # use album_id from the dictionary to get tracks
                 for track in tracks:
-                    insert_stg_track(conn, track, artist["id"])
+                    insert_stg_track(
+                        conn,
+                        track,
+                        artist_id=artist["id"],
+                        artist_name=artist["name"],
+                        album_name=album_data["name"],
+                        release_date=album_data["release_date"]
+                    )
 
         except Exception as e:
             logging.error(f"Error processing {name}: {e}")
