@@ -15,7 +15,7 @@ services:
       - ./postgres-config/pg_hba.conf:/etc/postgresql/pg_hba.conf
     command: postgres -c config_file=/etc/postgresql/postgresql.conf -c hba_file=/etc/postgresql/pg_hba.conf
     ports:
-      - "5433:5432"
+      - "${DB_HOST_PORT}:${DB_CONTAINER_PORT}"
 
   airflow-init:
     image: apache/airflow:2.8.1

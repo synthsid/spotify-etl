@@ -26,3 +26,15 @@ CREATE TABLE IF NOT EXISTS stg_tracks (
     raw_json JSONB,
     pulled_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE IF NOT EXISTS stg_albums (
+    album_id TEXT PRIMARY KEY,
+    name TEXT,
+    artist_id TEXT,
+    release_date TEXT,
+    total_tracks INTEGER,
+    album_type TEXT,
+    external_url TEXT,
+    raw_json JSONB,
+    pulled_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

@@ -19,7 +19,7 @@ def run_etl():
         print(f"{idx + 1}. {song['name']}")
 
 with DAG(
-    dag_id='spotify_etl_dag',
+    dag_id='test_spotify_etl_dag',
     default_args=default_args,
     start_date=datetime(2024, 1, 1),
     schedule_interval='@daily',
@@ -27,6 +27,6 @@ with DAG(
 ) as dag:
 
     etl_task = PythonOperator(
-        task_id='spotify_etl',
+        task_id='test_spotify_etl',
         python_callable=run_etl
     )
