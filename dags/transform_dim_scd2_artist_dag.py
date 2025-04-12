@@ -4,17 +4,9 @@ from datetime import datetime, timedelta
 import os
 import psycopg2
 from dotenv import load_dotenv
+from common_utils import get_connection
 
 load_dotenv()
-
-def get_connection(context="docker"):
-    return psycopg2.connect(
-        dbname=os.getenv("SPOTIFY_DB"),
-        user=os.getenv("SPOTIFY_DB_USER"),
-        password=os.getenv("SPOTIFY_DB_PASS"),
-        host=os.getenv("DB_HOST"),
-        port=os.getenv("DB_PORT")
-    )
 
 def run_artist_transformation():
     conn = get_connection()

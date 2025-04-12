@@ -59,6 +59,6 @@ def get_connection():
         dbname=os.getenv("SPOTIFY_DB"),
         user=os.getenv("SPOTIFY_DB_USER"),
         password=os.getenv("SPOTIFY_DB_PASS"),
-        host=os.getenv("LOCAL_DB_HOST"),
-        port=os.getenv("LOCAL_DB_PORT")
+        host=os.getenv("DB_HOST"),
+        port=os.getenv("DB_PORT")
     )

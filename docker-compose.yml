@@ -55,9 +55,9 @@ services:
       CLIENT_ID: ${CLIENT_ID}
       CLIENT_SECRET: ${CLIENT_SECRET}
       AIRFLOW__WEBSERVER__SECRET_KEY: ${AIRFLOW__WEBSERVER__SECRET_KEY}
+      PYTHONPATH: /opt/airflow:/opt/airflow/scripts:/opt/airflow/scripts/utils
     volumes:
-      - ./dags:/opt/airflow/dags
-      - ./scripts:/opt/airflow/scripts
+      - .:/opt/airflow/dags
       - ./requirements.txt:/requirements.txt
     command: webserver
     restart: always
@@ -73,8 +73,9 @@ services:
       CLIENT_ID: ${CLIENT_ID}
       CLIENT_SECRET: ${CLIENT_SECRET}
       AIRFLOW__WEBSERVER__SECRET_KEY: ${AIRFLOW__WEBSERVER__SECRET_KEY}
+      PYTHONPATH: /opt/airflow:/opt/airflow/scripts:/opt/airflow/scripts/utils
     volumes:
-      - ./dags:/opt/airflow/dags
+      - .:/opt/airflow/dags
       - ./scripts:/opt/airflow/scripts
       - ./requirements.txt:/requirements.txt
     command: scheduler
