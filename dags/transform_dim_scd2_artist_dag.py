@@ -12,8 +12,8 @@ def get_connection(context="docker"):
         dbname=os.getenv("SPOTIFY_DB"),
         user=os.getenv("SPOTIFY_DB_USER"),
         password=os.getenv("SPOTIFY_DB_PASS"),
-        host=os.getenv("DOCKER_DB_HOST"),
-        port=os.getenv("DOCKER_DB_PORT")
+        host=os.getenv("DB_HOST"),
+        port=os.getenv("DB_PORT")
     )
 
 def run_artist_transformation():
@@ -21,7 +21,7 @@ def run_artist_transformation():
     cur = conn.cursor()
 
     # Load and run the transformation SQL
-    with open("/opt/airflow/scripts/transform_dim_artist_scd2.sql", "r") as f:
+    with open("/opt/airflow/scripts/transformation/transform_dim_scd2_artist.sql", "r") as f:
         sql = f.read()
         cur.execute(sql)
         conn.commit()
@@ -45,7 +45,7 @@ dag = DAG(
 )
 
 transform_task = PythonOperator(
-    task_id="transform_artist_dim_fact",
+    task_id="transform_dim_scd2_artist",
     python_callable=run_artist_transformation,
     dag=dag
 )
