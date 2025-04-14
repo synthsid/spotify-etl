@@ -22,8 +22,9 @@ Fact Tables
 */
 
 CREATE TABLE IF NOT EXISTS fact_artist_popularity (
-    artist_id TEXT NOT NULL,
+    artist_key INTEGER NOT NULL,  -- Surrogate key, not artist_id
     snapshot_date DATE DEFAULT CURRENT_DATE,
     popularity INTEGER,
-    PRIMARY KEY (artist_id, snapshot_date)
+    PRIMARY KEY (artist_key, snapshot_date),
+    FOREIGN KEY (artist_key) REFERENCES dim_artist(artist_key)
 );

@@ -1,12 +1,15 @@
 -- Step 1: Insert daily popularity snapshot (skip if already loaded)
 INSERT INTO fact_artist_popularity (
-    artist_id,
+    artist_key,
     snapshot_date,
     popularity
 )
 SELECT
-    raw_json->>'id' AS artist_id,
+    d.artist_key,
     CURRENT_DATE AS snapshot_date,
-    (raw_json->>'popularity')::INT AS popularity
-FROM stg_artists
-ON CONFLICT (artist_id, snapshot_date) DO NOTHING;
+    (s.raw_json->>'popularity')::INT As popularity
+FROM stg_artists s
+JOIN dim_artist d  
+ON   s.raw->>'id' = d.artist_id
+WHERE d.is_current = TRUE
+ON CONFLICT (artist_key, snapshot_date) DO NOTHING;
