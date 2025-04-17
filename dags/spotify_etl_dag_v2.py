@@ -1,5 +1,7 @@
 # import python scripts like artist and albums
 from utils.common_utils import get_connection, get_token
+from extract.artists import load_artists
+from extract.albums import load_albums
 
 def run_spotify_etl():
     con = get_connection
