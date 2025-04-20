@@ -15,6 +15,4 @@ def run_spotify_etl():
     album_ids = load_albums(conn, token, artist_ids)
     load_tracks(conn, token, album_list)
 
-    #TODO: use album_ids to pass it to tracks module next
-
     conn.close()
