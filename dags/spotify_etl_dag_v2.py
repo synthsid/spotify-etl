@@ -14,5 +14,6 @@ def run_spotify_etl():
     artist_ids = load_artists(conn, token, artist_names)
     album_ids = load_albums(conn, token, artist_ids)
     load_tracks(conn, token, album_list)
+    # Todo: playlist and user 
 
     conn.close()
