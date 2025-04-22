@@ -28,3 +28,17 @@ CREATE TABLE IF NOT EXISTS fact_artist_popularity (
     PRIMARY KEY (artist_key, snapshot_date),
     FOREIGN KEY (artist_key) REFERENCES dim_artist(artist_key)
 );
+
+
+CREATE TABLE IF NOT EXISTS fact_track (
+    track_id TEXT PRIMARY KEY,
+    name TEXT,
+    artist_id TEXT,
+    artist_name TEXT,
+    album_name TEXT,
+    release_date DATE,
+    duration_ms INTEGER,
+    explicit BOOLEAN,
+    external_url TEXT,
+    snapshot_date DATE DEFAULT CURRENT_DATE
+);
