@@ -17,6 +17,22 @@ CREATE TABLE IF NOT EXISTS dim_artist (
 );
 
 
+CREATE TABLE IF NOT EXISTS dim_album (
+    album_key SERIAL PRIMARY KEY,
+    album_id TEXT NOT NULL,
+    name TEXT,
+    album_type TEXT,
+    artist_id TEXT,
+    total_tracks INTEGER,
+    release_date DATE,
+    external_url TEXT,
+    is_current BOOLEAN DEFAULT TRUE,
+    start_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    end_date TIMESTAMP
+);
+
+
+
 /*
 Fact Tables
 */
