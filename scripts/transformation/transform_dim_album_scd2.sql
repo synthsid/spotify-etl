@@ -25,3 +25,20 @@ WHERE
         OR (s.raw_json->>'total_tracks')::INT IS DISTINCT FROM d.total_tracks
         OR s.raw_json->>'release_date'::DATE IS DISTINCT FROM d.release_date
     );
+
+-- Step 2: Expire old versions
+UPDATE dim_album d
+SET
+    is_current = FALSE,
+    end_date = CURRENT_TIMESTAMP
+FROM stg_albums s
+WHERE
+    d.album_id = s.raw_json->>'id'
+    AND d.is_current = TRUE
+    AND (
+        s.raw_json->>'name' IS DISTINCT FROM d.name
+        OR s.raw_json->>'album_type' IS DISTINCT FROM d.album_type
+        OR s.raw_json->'artists'->0->>'id' IS DISTINCT FROM d.artist_id
+        OR (s.raw_json->>'total_tracks')::INT IS DISTINCT FROM d.total_tracks
+        OR s.raw_json->>'release_date'::DATE IS DISTINCT FROM d.release_date
+    );
