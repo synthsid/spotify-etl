@@ -12,7 +12,7 @@ def transform_fact_track():
         conn.commit()
     cur.close()
     conn.close()
-    print("✅ fact_track transformation completed")
+    print("fact_track transformation completed")
 
 dag = DAG(
     dag_id="spotify_transform_fact_track",

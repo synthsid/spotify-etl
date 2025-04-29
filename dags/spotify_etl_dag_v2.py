@@ -5,7 +5,7 @@ from extract.albums import load_albums
 from extract.tracks import load_tracks
 
 def run_spotify_etl():
-    con = get_connection
+    conn = get_connection()
     token = get_token()
 
     artist_names = [ "Drake", "Taylor Swift", "Kendrick Lamar", "Adele", "Bad Bunny", 
@@ -13,7 +13,7 @@ def run_spotify_etl():
     
     artist_ids = load_artists(conn, token, artist_names)
     album_ids = load_albums(conn, token, artist_ids)
-    load_tracks(conn, token, album_list)
-    # Todo: playlist and user 
+    load_tracks(conn, token, album_ids)
+    # TODO: Add playlist and user ETL modules later
 
     conn.close()
