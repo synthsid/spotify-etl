@@ -4,7 +4,7 @@ from airflow.sensors.external_task import ExternalTaskSensor
 from datetime import datetime, timedelta
 from utils.common_utils import get_connection
 
-# === Transformation tasks ===
+# Transformation tasks
 
 def transform_dim_artist():
     conn = get_connection()
@@ -38,7 +38,7 @@ def transform_fact_track():
 
 
 
-# === DAG Definition ===
+# DAG Definition
 
 default_args = {
     'owner': 'airflow',
@@ -54,7 +54,7 @@ dag = DAG(
     catchup=False
 )
 
-# === ExternalTaskSensor ===
+# ExternalTaskSensor
 
 wait_for_spotify_etl = ExternalTaskSensor(
     task_id="wait_for_spotify_etl",
@@ -66,7 +66,7 @@ wait_for_spotify_etl = ExternalTaskSensor(
     dag=dag
 )
 
-# === Transformation tasks ===
+# Transformation tasks
 
 transform_artist = PythonOperator(
     task_id="transform_dim_artist",
@@ -86,6 +86,6 @@ transform_track = PythonOperator(
     dag=dag
 )
 
-# === Set Task Dependencies ===
+#Set Task Dependencies
 
 wait_for_spotify_etl >> [transform_artist, transform_album] >> transform_track
