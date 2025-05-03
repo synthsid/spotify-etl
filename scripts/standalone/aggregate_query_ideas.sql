@@ -12,3 +12,8 @@ FROM fact_track ft
 JOIN dim_album d_al ON ft.album_id = d_al.album_id
 JOIN dim_artist da ON d_al.artist_id = da.artist_id
 GROUP BY da.artist_key, da.artist_name;
+
+
+-- album stats
+-- artist popularity?
+
