@@ -30,4 +30,13 @@ GROUP BY da.album_id, da.album_name;
 
 
 -- artist popularity?
+-- Popularity change of an artist over time
+CREATE TABLE agg_artist_popularity_trend AS
+SELECT
+    artist_id,
+    DATE(recorded_at) AS popularity_date,
+    AVG(popularity) AS avg_popularity
+FROM fact_artist_popularity
+GROUP BY artist_id, DATE(recorded_at)
+ORDER BY artist_id, popularity_date;
 
