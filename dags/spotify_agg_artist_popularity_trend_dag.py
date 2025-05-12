@@ -41,3 +41,5 @@ with DAG(
         task_id="aggregate_artist_popularity_trend",
         python_callable=run_agg_artist_popularity,
     )
+
+wait_for_transform_fact_track >> aggregate
