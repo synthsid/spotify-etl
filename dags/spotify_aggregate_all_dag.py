@@ -43,3 +43,36 @@ def run_agg_artist_popularity():
     print("Artist popularity trend rows:", cur.fetchone()[0])
     cur.close()
     conn.close()
+
+with DAG(
+    dag_id="spotify_aggregate_all",
+    default_args=default_args,
+    schedule_interval="@daily",
+    catchup=False
+) as dag:
+
+    wait_for_transform_fact_track = ExternalTaskSensor(
+        task_id="wait_for_transform_fact_track",
+        external_dag_id="spotify_transform",
+        external_task_id="transform_fact_track",
+        mode="poke",
+        timeout=600,
+        poke_interval=30,
+    )
+
+    agg_tracks_by_artist = PythonOperator(
+        task_id="aggregate_total_tracks_by_artist",
+        python_callable=run_agg_total_tracks_by_artist
+    )
+
+    agg_album_stats = PythonOperator(
+        task_id="aggregate_album_stats",
+        python_callable=run_agg_album_stats
+    )
+
+    agg_artist_popularity = PythonOperator(
+        task_id="aggregate_artist_popularity_trend",
+        python_callable=run_agg_artist_popularity
+    )
+
+    wait_for_transform_fact_track >> [agg_tracks_by_artist, agg_album_stats, agg_artist_popularity]
