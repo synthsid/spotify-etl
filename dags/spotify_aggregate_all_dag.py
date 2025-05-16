@@ -11,6 +11,12 @@ default_args = {
     'retry_delay': timedelta(minutes=3),
 }
 
+# can add email notification in default_args
+# 'email': ['test@example.com'], 
+# 'email_on_failure': True,
+# 'email_on_retry': False  
+
+
 def run_agg_total_tracks_by_artist():
     conn = get_connection()
     cur = conn.cursor()
@@ -75,4 +81,5 @@ with DAG(
         python_callable=run_agg_artist_popularity
     )
 
+# Running these aggregation tasks in parallel, we can make it chain instead
     wait_for_transform_fact_track >> [agg_tracks_by_artist, agg_album_stats, agg_artist_popularity]
