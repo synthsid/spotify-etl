@@ -38,3 +38,13 @@ CREATE TABLE IF NOT EXISTS stg_albums (
     raw_json JSONB,
     pulled_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+
+-- Pull in audio features
+-- this data will help with understanding of energy, tempo, and other features of a track
+-- could help understand mood/genre etc
+
+-- Genre needs to be pulled from artist metadata 
+-- but could turn into dim-genre
+
+-- could also dig into markets/geography 
