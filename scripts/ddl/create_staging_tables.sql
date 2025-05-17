@@ -48,3 +48,10 @@ CREATE TABLE IF NOT EXISTS stg_albums (
 -- but could turn into dim-genre
 
 -- could also dig into markets/geography 
+
+
+-- stg_audio_features.sql – for storing raw audio features per track
+
+-- stg_artist_genres.sql – for mapping artists to multiple genres
+
+-- stg_track_markets.sql – for tracking where each track is available
