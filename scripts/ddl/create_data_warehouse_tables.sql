@@ -59,3 +59,12 @@ CREATE TABLE IF NOT EXISTS fact_track (
     FOREIGN KEY (artist_key) REFERENCES dim_artist(artist_key),
     FOREIGN KEY (album_key) REFERENCES dim_album(album_key)
 );
+
+
+
+-- dim_genre.sql
+-- list of unique genres
+CREATE TABLE IF NOT EXISTS dim_genre (
+    genre_id SERIAL PRIMARY KEY,
+    genre_name TEXT UNIQUE NOT NULL
+);
