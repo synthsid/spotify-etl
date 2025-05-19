@@ -2,7 +2,7 @@
    
 ##  ETL Flow Overview
 This project builds a scalable ETL (Extract, Transform, Load) pipeline using the Spotify Web API, Docker, Apache Airflow, and PostgreSQL. 
-The pipeline extracts artist, album, and track data, transforms it into a dimensional model, and loads it into a Postgres-based data warehouse for downstream analytics.
+The pipeline extracts artist, album, and track data, transforms it into a dimensional model, and loads it into a Postgres-based data warehouse(I am simulating Redshift by doing everything in Postgres) for downstream analytics.
 
 1. **Extract**  
    Use Spotify API to pull metadata about artists, albums, tracks, etc. 
