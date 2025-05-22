@@ -139,3 +139,14 @@ agg_total_tracks_by_artist
 fact_artist_popularity
 
 More dimension and staging tables are being added for audio features, genres, and markets.
+
+
+## Sample DAGs
+
+spotify_etl.py – Main ETL process
+
+agg_total_tracks_by_artist.py – Aggregates total tracks per artist
+
+agg_album_stats.py – Calculates album-level stats
+
+agg_artist_popularity.py – Tracks popularity changes over time
