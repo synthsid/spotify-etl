@@ -52,6 +52,41 @@ CREATE TABLE IF NOT EXISTS stg_albums (
 
 -- stg_audio_features.sql – for storing raw audio features per track
 
+CREATE TABLE IF NOT EXISTS stg_audio_features (
+    track_id TEXT PRIMARY KEY,
+    danceability FLOAT,
+    energy FLOAT,
+    key INTEGER,
+    loudness FLOAT,
+    mode INTEGER,
+    speechiness FLOAT,
+    acousticness FLOAT,
+    instrumentalness FLOAT,
+    liveness FLOAT,
+    valence FLOAT,
+    tempo FLOAT,
+    duration_ms INTEGER,
+    time_signature INTEGER,
+    fetched_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
 -- stg_artist_genres.sql – for mapping artists to multiple genres
 
+CREATE TABLE IF NOT EXISTS stg_artist_genres (
+    artist_id TEXT,
+    genre TEXT,
+    fetched_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (artist_id, genre)
+);
+
+
 -- stg_track_markets.sql – for tracking where each track is available
+
+CREATE TABLE IF NOT EXISTS stg_track_markets (
+    track_id TEXT,
+    market_code TEXT,  -- ISO country code, e.g., 'US', 'GB'
+    fetched_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (track_id, market_code)
+);
+
