@@ -68,3 +68,24 @@ CREATE TABLE IF NOT EXISTS dim_genre (
     genre_id SERIAL PRIMARY KEY,
     genre_name TEXT UNIQUE NOT NULL
 );
+
+
+--dim_audio_feature
+-- audio fingerprint
+CREATE TABLE IF NOT EXISTS dim_audio_feature (
+    track_id TEXT PRIMARY KEY,
+    danceability FLOAT,
+    energy FLOAT,
+    key INTEGER,
+    loudness FLOAT,
+    mode INTEGER,
+    speechiness FLOAT,
+    acousticness FLOAT,
+    instrumentalness FLOAT,
+    liveness FLOAT,
+    valence FLOAT,
+    tempo FLOAT,
+    duration_ms INTEGER,
+    time_signature INTEGER,
+    effective_date TIMESTAMP
+);
