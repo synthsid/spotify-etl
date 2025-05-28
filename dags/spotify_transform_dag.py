@@ -9,7 +9,7 @@ from utils.common_utils import get_connection
 def transform_dim_artist():
     conn = get_connection()
     cur = conn.cursor()
-    with open("/opt/airflow/scripts/transformation/transform_dim_artist_scd2.sql", "r") as f:
+    with open("/opt/airflow/scripts/transformation/transform_dim_scd2_artist.sql", "r") as f: 
         cur.execute(f.read())
     conn.commit()
     cur.close()
@@ -19,7 +19,7 @@ def transform_dim_artist():
 def transform_dim_album():
     conn = get_connection()
     cur = conn.cursor()
-    with open("/opt/airflow/scripts/transformation/transform_dim_album_scd2.sql", "r") as f:
+    with open("/opt/airflow/scripts/transformation/transform_dim_scd2_album.sql", "r") as f:
         cur.execute(f.read())
     conn.commit()
     cur.close()
