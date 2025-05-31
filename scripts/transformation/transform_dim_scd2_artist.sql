@@ -48,10 +48,13 @@ WHERE
     );
 
 -- Step 4: Insert popularity snapshot
-INSERT INTO fact_artist_popularity (artist_id, snapshot_date, popularity)
+INSERT INTO fact_artist_popularity (artist_key, snapshot_date, popularity)
 SELECT
-    s.raw_json->>'id' AS artist_id,
+    d.artist_key,
     CURRENT_DATE,
     (s.raw_json->>'popularity')::INT
 FROM stg_artists s
-ON CONFLICT (artist_id, snapshot_date) DO NOTHING;
+JOIN dim_artist d
+    ON s.raw_json->>'id' = d.artist_id
+WHERE d.is_current = TRUE
+ON CONFLICT (artist_key, snapshot_date) DO NOTHING;
