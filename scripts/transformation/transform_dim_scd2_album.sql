@@ -9,7 +9,11 @@ SELECT
     s.raw_json->>'album_type' AS album_type,
     s.raw_json->'artists'->0->>'id' AS artist_id,
     (s.raw_json->>'total_tracks')::INT,
-    (s.raw_json->>'release_date')::DATE,
+    CASE
+        WHEN s.raw_json->>'release_date' ~ '^\d{4}-\d{2}-\d{2}$'
+        THEN (s.raw_json->>'release_date')::DATE
+        ELSE NULL
+    END AS release_date,
     s.raw_json->'external_urls'->>'spotify' AS external_url,
     TRUE,
     CURRENT_TIMESTAMP
@@ -23,7 +27,14 @@ WHERE
         OR s.raw_json->>'album_type' IS DISTINCT FROM d.album_type
         OR s.raw_json->'artists'->0->>'id' IS DISTINCT FROM d.artist_id
         OR (s.raw_json->>'total_tracks')::INT IS DISTINCT FROM d.total_tracks
-        OR (s.raw_json->>'release_date')::DATE IS DISTINCT FROM d.release_date
+        OR (
+            CASE
+                WHEN s.raw_json->>'release_date' ~ '^\d{4}-\d{2}-\d{2}$'
+                THEN (s.raw_json->>'release_date')::DATE
+                ELSE NULL
+            END
+            IS DISTINCT FROM d.release_date
+        )
     );
 
 -- Step 2: Expire old versions
@@ -40,5 +51,12 @@ WHERE
         OR s.raw_json->>'album_type' IS DISTINCT FROM d.album_type
         OR s.raw_json->'artists'->0->>'id' IS DISTINCT FROM d.artist_id
         OR (s.raw_json->>'total_tracks')::INT IS DISTINCT FROM d.total_tracks
-        OR (s.raw_json->>'release_date')::DATE IS DISTINCT FROM d.release_date
+        OR (
+            CASE
+                WHEN s.raw_json->>'release_date' ~ '^\d{4}-\d{2}-\d{2}$'
+                THEN (s.raw_json->>'release_date')::DATE
+                ELSE NULL
+            END
+            IS DISTINCT FROM d.release_date
+        )
     );

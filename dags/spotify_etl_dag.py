@@ -213,7 +213,7 @@ dag = DAG(
     dag_id='spotify_etl',
     default_args=default_args,
     start_date=days_ago(1),
-    schedule_interval='@hourly',
+    schedule_interval='@daily',
     catchup=False
 )
 
