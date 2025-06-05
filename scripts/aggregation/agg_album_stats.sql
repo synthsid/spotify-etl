@@ -1,10 +1,19 @@
--- agg_album_stats.sql
--- Number of tracks, total duration, and average duration per album
+CREATE TABLE IF NOT EXISTS agg_album_stats (
+    album_key INT PRIMARY KEY,
+    album_name TEXT,
+    num_tracks INT,
+    total_duration_ms BIGINT,
+    avg_duration_ms FLOAT
+);
 
-CREATE TABLE IF NOT EXISTS agg_album_stats AS
+TRUNCATE TABLE agg_album_stats;
+
+INSERT INTO agg_album_stats (
+    album_key, album_name, num_tracks, total_duration_ms, avg_duration_ms
+)
 SELECT
     da.album_key,
-    da.name as Album_name,
+    da.name AS album_name,
     COUNT(ft.track_id) AS num_tracks,
     SUM(ft.duration_ms) AS total_duration_ms,
     ROUND(AVG(ft.duration_ms), 2) AS avg_duration_ms

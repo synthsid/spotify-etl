@@ -1,10 +1,19 @@
--- agg_artist_popularity_trend.sql
--- Average daily popularity of an artist using the latest dim_artist mapping
+CREATE TABLE IF NOT EXISTS agg_artist_popularity_trend (
+    artist_key INT,
+    artist_name TEXT,
+    snapshot_date DATE,
+    avg_popularity FLOAT,
+    PRIMARY KEY (artist_key, snapshot_date)
+);
 
-CREATE TABLE IF NOT EXISTS agg_artist_popularity_trend AS
+TRUNCATE TABLE agg_artist_popularity_trend;
+
+INSERT INTO agg_artist_popularity_trend (
+    artist_key, artist_name, snapshot_date, avg_popularity
+)
 SELECT
     da.artist_key,
-    da.name as artist_name,
+    da.name AS artist_name,
     ap.snapshot_date,
     AVG(ap.popularity) AS avg_popularity
 FROM fact_artist_popularity ap
