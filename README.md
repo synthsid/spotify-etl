@@ -123,23 +123,6 @@ docker-compose up --build
 http://localhost:8080
 
 
-## Database Schema
-Tables include:
-
-dim_artist
-
-dim_album
-
-fact_track
-
-agg_album_stats
-
-agg_total_tracks_by_artist
-
-fact_artist_popularity
-
-More dimension and staging tables are being added for audio features, genres, and markets.
-
 
 ## Sample DAGs
 
