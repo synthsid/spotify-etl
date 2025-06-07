@@ -1,0 +1,7 @@
+
+TODO
+
+1. I need to run and test dbt within Docker
+2. Intialize dbt Project in the Project
+3. Configure the profile
+4. Test out some TRansform Scripts. 
