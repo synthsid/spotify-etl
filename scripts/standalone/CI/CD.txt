@@ -1,0 +1,5 @@
+
+TODO:
+
+1. add some sort of test dag integrity
+3. Github actions workflow
