@@ -41,3 +41,15 @@ SELECT track_id, COUNT(*)
 FROM fact_track
 GROUP BY track_id
 HAVING COUNT(*) > 1;
+
+
+-- 9. Check for any missing foreign keys (artist/album dim references)
+SELECT ft.*
+FROM fact_track ft
+LEFT JOIN dim_artist da ON ft.artist_key = da.artist_key
+WHERE da.artist_key IS NULL;
+
+SELECT ft.*
+FROM fact_track ft
+LEFT JOIN dim_album al ON ft.album_key = al.album_key
+WHERE al.album_key IS NULL;
