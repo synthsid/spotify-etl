@@ -27,23 +27,23 @@ The pipeline extracts artist, album, and track data, transforms it into a dimens
 
 ##  Project Structure
 spotify-etl/
-├── dags/ # Airflow DAGs for orchestration
+dags/ # Airflow DAGs for orchestration
 
-├── scripts/ # Various Python and SQL scripts for ETL, DDL and other
+scripts/ # Various Python and SQL scripts for ETL, DDL and other
 
-├── postgres-config/ # PostgreSQL initialization and config
+postgres-config/ # PostgreSQL initialization and config
 
-├── Dockerfile # Airflow + Python setup
+Dockerfile # Airflow + Python setup
 
-├── docker-compose.yml # Compose services: Airflow, Postgres, etc.
+docker-compose.yml # Compose services: Airflow, Postgres, etc.
 
-├── postgres-init-multiple-db.sh # Init script for PostgreSQL
+postgres-init-multiple-db.sh # Init script for PostgreSQL
 
-├── wait-for-postgres.sh # Ensures Postgres is ready before DAGs run
+wait-for-postgres.sh # Ensures Postgres is ready before DAGs run
 
-├── test_connection.py # Connection test to validate setup
+test_connection.py # Connection test to validate setup
 
-└── requirements.txt # Python dependencies
+requirements.txt # Python dependencies
 
 
 ### Prerequisites
