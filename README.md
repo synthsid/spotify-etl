@@ -17,7 +17,6 @@ The pipeline extracts artist, album, and track data, transforms it into a dimens
    DAGs manage scheduling, retries, and task dependencies for hourly or daily execution.
 
 ##  Tech Stack
-
 - **Python** – Core ETL scripting
 - **Docker & Docker Compose** – Containerized environment
 - **PostgreSQL** – Data warehouse storage
