@@ -50,3 +50,10 @@ def validate_warehouse():
             INSERT INTO validation_audit_log (check_name, status, failure_count, notes)
             VALUES (%s, %s, %s, %s)
         """, (name, status, row_count, notes))
+
+    conn.commit()
+    cur.close()
+    conn.close()
+
+    if failed_checks:
+        raise AirflowFailException(f"Validation failed on: {', '.join(failed_checks)}")
