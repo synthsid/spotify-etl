@@ -53,3 +53,10 @@ SELECT ft.*
 FROM fact_track ft
 LEFT JOIN dim_album al ON ft.album_key = al.album_key
 WHERE al.album_key IS NULL;
+
+
+
+-- validation table check
+SELECT * FROM validation_audit_log
+ORDER BY checked_at DESC
+LIMIT 50;
