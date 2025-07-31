@@ -1,2 +1,4 @@
 python-dotenv
 requests
+psycopg2-binary
+dbt-postgres==1.7.8
