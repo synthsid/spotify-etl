@@ -1,0 +1,16 @@
+version: 2
+
+models:
+  - name: stg_tracks
+    description: "Staging model for Spotify tracks"
+    columns:
+      - name: track_id
+        description: "Primary key for the track"
+        tests:
+          - not_null
+          - unique
+
+      - name: track_name
+        description: "Track name"
+        tests:
+          - not_null
