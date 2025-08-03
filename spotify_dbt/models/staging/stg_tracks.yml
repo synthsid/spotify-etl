@@ -10,7 +10,7 @@ models:
           - not_null
           - unique
 
-      - name: track_name
+      - name: name
         description: "Track name"
         tests:
           - not_null
