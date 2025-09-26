@@ -1,9 +1,6 @@
--- models/staging/stg_tracks.sql
-
 with raw as (
-    select * from public.stg_tracks
+    select * from {{ source('raw', 'stg_tracks') }}
 )
 
-select
-    *
+select *
 from raw
